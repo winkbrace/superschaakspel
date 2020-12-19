@@ -11,7 +11,7 @@ const stukken = {
 
     ctx: document.getElementById("stukken").getContext("2d"),
 
-    init: function(opstelling) {
+    init: function() {
         this.soorten = {
             t: this.toren,
             P: this.paard,
@@ -20,6 +20,15 @@ const stukken = {
             k: this.koning,
             p: this.pion,
         };
+
+        const opstelling = 'zt zP zl zd zk zl zP zt' +
+                          ' zp zp zp zp zp zp zp zp' +
+                          ' .. .. .. .. .. .. .. ..' +
+                          ' .. .. .. .. .. .. .. ..' +
+                          ' .. .. .. .. .. .. .. ..' +
+                          ' .. .. .. .. .. .. .. ..' +
+                          ' wp wp wp wp wp wp wp wp' +
+                          ' wt wP wl wd wk wl wP wt';
 
         this.teken(opstelling);
     },
@@ -31,6 +40,9 @@ const stukken = {
         const stukken = opstelling.split(' ');
         for (let i = 0, len = stukken.length; i < len; i++) {
             const stuk = stukken[i];
+            const vakje = bord.geefVakje(i);
+
+            bord.plaatsStuk(stuk, vakje);
 
             if (stuk === '..') {
                 continue;
@@ -38,7 +50,6 @@ const stukken = {
 
             const stukKleur = stuk.substr(0, 1);
             const stukSoort = this.getSoort( stuk.substr(1, 1));
-            const vakje = bord.getVakje(i);
             let x = 20 + (100 * vakje.col);
             const y = 80 + (100 * vakje.row);
 

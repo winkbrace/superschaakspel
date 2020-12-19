@@ -1,8 +1,33 @@
 var bord = {
     ctx: document.getElementById("schaakbord").getContext("2d"),
+    bord: {},
 
     init: function() {
-        this.teken("#211F1B");
+        this.maakBord();
+        this.teken(this.randomKleur());
+    },
+
+    maakBord: function() {
+        for (let row = 0; row < 8; row++) {
+            this.bord[row] = {};
+            for (let col = 0; col < 8; col++) {
+                this.bord[row][col] = this.maakVakje(row, col);
+            }
+        }
+    },
+
+    maakVakje: function(row, col) {
+        return {
+            row: row,
+            col: col,
+            kleur: bord.isWitVakje(row, col) ? 'w' : 'z',
+            stuk: null,
+        };
+    },
+
+    plaatsStuk: function(stuk, vakje) {
+        vakje.stuk = stuk;
+        this.bord[vakje.row][vakje.col] = vakje;
     },
 
     teken: function(kleur) {
@@ -23,6 +48,9 @@ var bord = {
                 this.kleurVakje(x, y, vakKleur);
             }
         }
+
+        // geef ook de kleur kiezer dezelfde kleur
+        document.getElementById('bordkleur').value = kleur;
     },
 
     /**
@@ -48,19 +76,22 @@ var bord = {
         this.ctx.fillRect(x, y, 100, 100);
     },
 
-    getVakje: function(nr) {
-        const vakje = {
-            row: Math.floor(nr / 8),
-            col: nr % 8,
-            kleur: 'w',
+    geefVakje: function(nr) {
+        const row = Math.floor(nr / 8);
+        const col = nr % 8;
 
-            init: function() {
-                this.kleur = bord.isWitVakje(this.row, this.col) ? 'w' : 'z'
+        return this.bord[row][col];
+    },
+
+    geefOpstelling: function() {
+        let stukken = [];
+        for (let row=0; row<8; row++) {
+            for (let col=0; col<8; col++) {
+                stukken.push(this.bord[row][col].stuk);
             }
-        };
-        vakje.init();
+        }
 
-        return vakje;
+        return stukken.join(' ');
     },
 
     isWitVakje: function(row, col) {
@@ -69,19 +100,19 @@ var bord = {
 
     randomKleur: function(){
        return '#' + Math.floor(Math.random()*16777215).toString(16).padStart(6, '0');
-    }
+    },
 };
 
 // Verander kleur van het bord
 document.getElementById('bordkleur').addEventListener('input', (e) => bord.teken(e.target.value));
 
-// DDDDDIIIIISSSSCCCOO!!!!!!
+// DDDDDIIIIISSSSCCCOOOOOO!!!!!!
 let disco = false;
 let discoInterval = null;
 document.getElementById('disco').addEventListener('click', (e) => {
     disco = ! disco
     if (disco) {
-        const snelheid = document.getElementById('disco-snelheid').value;
+        const snelheid = 1 - document.getElementById('disco-snelheid').value;
         discoInterval = setInterval(_ => bord.teken(bord.randomKleur()), snelheid);
     } else {
         clearInterval(discoInterval);
@@ -89,6 +120,7 @@ document.getElementById('disco').addEventListener('click', (e) => {
 });
 
 document.getElementById('disco-snelheid').addEventListener('change', (e) => {
+    disco = true;
     clearInterval(discoInterval);
-    discoInterval = setInterval(_ => bord.teken(bord.randomKleur()), e.target.value)
+    discoInterval = setInterval(_ => bord.teken(bord.randomKleur()), 1 - e.target.value)
 });
