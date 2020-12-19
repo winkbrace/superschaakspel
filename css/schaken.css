@@ -1,0 +1,30 @@
+body {
+    font-family: Verdana, Tahoma, Arial, sans-serif;
+}
+
+div {
+  position:relative;
+}
+
+#canvas-container {
+  height:811px
+}
+
+canvas {
+  font-family: 'Font Awesome 5 Pro';
+  font-weight: 600;
+
+  position: absolute;
+  top: 0px;
+  left: 0px;
+}
+
+#bordkleur {
+    width: 95px;
+    height: 2rem;
+}
+
+#disco {
+    padding: 3px 19px;
+    margin-top: 10px;
+}

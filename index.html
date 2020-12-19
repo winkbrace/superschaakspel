@@ -1,0 +1,59 @@
+<!doctype html>
+<html class="no-js" lang="">
+
+<head>
+    <meta charset="utf-8">
+    <title>SuperSchaakspel</title>
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <meta property="og:title" content="">
+    <meta property="og:type" content="">
+    <meta property="og:url" content="">
+    <meta property="og:image" content="">
+
+    <link rel="manifest" href="site.webmanifest">
+    <link rel="apple-touch-icon" href="favicon.svg">
+    <link rel="icon" href="favicon.svg">
+    <!-- Place favicon.ico in the root directory -->
+
+    <link rel="stylesheet" href="css/normalize.css">
+    <link rel="stylesheet" href="css/main.css">
+    <link rel="stylesheet" href="css/fontawesome.min.css">
+    <link rel="stylesheet" href="css/schaken.css">
+
+    <meta name="theme-color" content="#fafafa">
+</head>
+
+<body style="margin: 50px;">
+
+    <h1>SuperSchaakspel</h1>
+    <p>hoi mensen dit is het schaakspel.</p>
+
+    <div id="canvas-container">
+        <canvas id="schaakbord" width="801" height="801"></canvas>
+        <canvas id="stukken" width="801" height="801"></canvas>
+    </div>
+
+    <div>
+        <input id="bordkleur" type="color">
+        kies je eigen kleur voor het bord
+    </div>
+    <div>
+        <input id="disco" type="button" value="DISCO!" data-on="0">
+        <input id="disco-snelheid" type="range" min="50" max="1000" value="200" class="slider"> Snelheid
+    </div>
+
+    <!-- Deze hack is nodig om de fontawesome iconen te laden -->
+    <i class="fas fa-chess-rook" style="color:white; font-size: 0;"></i>
+
+    <script src="js/vendor/modernizr-3.11.2.min.js"></script>
+    <script src="js/plugins.js"></script>
+    <script src="js/bord.js"></script>
+    <script src="js/stukken.js"></script>
+    <script src="js/game.js"></script>
+    <script src="js/main.js"></script>
+
+</body>
+
+</html>

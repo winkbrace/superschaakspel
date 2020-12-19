@@ -1,0 +1,12 @@
+{
+  "short_name": "SuperSchaakspel",
+  "name": "SuperSchaakspel",
+  "icons": [{
+    "src": "favicon.svg",
+    "type": "image/svg",
+    "sizes": "192x192"
+  }],
+  "start_url": "/",
+  "background_color": "#fafafa",
+  "theme_color": "#fafafa"
+}
