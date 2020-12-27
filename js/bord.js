@@ -1,6 +1,7 @@
 var bord = {
     ctx: document.getElementById("schaakbord").getContext("2d"),
     bord: {},
+    vakBreedte: 100, vakHoogte: 100,
 
     init: function() {
         this.maakBord();
@@ -30,6 +31,13 @@ var bord = {
         this.bord[vakje.row][vakje.col] = vakje;
     },
 
+    verzetStuk: function(stuk, startVakje, doelVakje) {
+        this.plaatsStuk('..', startVakje);
+        this.plaatsStuk(stuk, doelVakje);
+
+        stukken.teken(this.geefOpstelling());
+    },
+
     teken: function(kleur) {
         this.ctx.lineWidth = 1;
         this.ctx.strokeStyle = "black";
@@ -37,11 +45,11 @@ var bord = {
         // teken de vierkanten van het bord
         for (let row = 0; row < 8; row++) {
             for (let col = 0; col < 8; col++) {
-                let x = 0.5 + (100 * col);
-                let y = 0.5 + (100 * row);
+                let x = 0.5 + (this.vakBreedte * col);
+                let y = 0.5 + (this.vakHoogte * row);
 
                 // teken rand
-                this.ctx.strokeRect(x, y, 100, 100);
+                this.ctx.strokeRect(x, y, this.vakBreedte, this.vakHoogte);
 
                 // kleur vakje
                 const vakKleur = this.isWitVakje(row, col) ? 'white' : kleur;
@@ -58,27 +66,34 @@ var bord = {
      */
     kleurVakje: function(x, y, kleur) {
         // horizontaal verloop
-        let verloopje = this.ctx.createLinearGradient(x-40, y, x + 140, y);
+        let verloopje = this.ctx.createLinearGradient(x-40, y, x + this.vakBreedte + 40, y);
         verloopje.addColorStop(0, 'black');
         verloopje.addColorStop(0.25, kleur);
         verloopje.addColorStop(0.75, kleur);
         verloopje.addColorStop(1, 'black');
         this.ctx.fillStyle = verloopje;
-        this.ctx.fillRect(x, y, 100, 100);
+        this.ctx.fillRect(x, y, this.vakBreedte, this.vakHoogte);
 
         // verticaal verloop
-        verloopje = this.ctx.createLinearGradient(x, y-40, x, y + 140);
+        verloopje = this.ctx.createLinearGradient(x, y-40, x, y + this.vakHoogte + 40);
         verloopje.addColorStop(0, 'black');
         verloopje.addColorStop(0.25, 'transparent');
         verloopje.addColorStop(0.75, 'transparent');
         verloopje.addColorStop(1, 'black');
         this.ctx.fillStyle = verloopje;
-        this.ctx.fillRect(x, y, 100, 100);
+        this.ctx.fillRect(x, y, this.vakBreedte, this.vakHoogte);
     },
 
-    geefVakje: function(nr) {
+    geefVakjeVanNr: function(nr) {
         const row = Math.floor(nr / 8);
         const col = nr % 8;
+
+        return this.bord[row][col];
+    },
+
+    geefVakjeVanXY: function (x, y) {
+        const row = Math.floor(y / this.vakHoogte);
+        const col = Math.floor(x / this.vakBreedte);
 
         return this.bord[row][col];
     },

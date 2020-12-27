@@ -6,7 +6,10 @@ var game = {
         this.beurt = "wit";
 
         bord.init();
-        document.fonts.ready.then(_ => stukken.init());
+        document.fonts.ready.then(_ => {
+            stukken.init();
+            invoer.init();
+        });
     },
 
     startBeurt: function() {
