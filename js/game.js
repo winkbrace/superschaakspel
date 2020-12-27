@@ -20,6 +20,13 @@ var game = {
         this.beurt = this.beurt == 'wit' ? 'zwart' : 'wit';
     },
 
+    verzetStuk: function(stuk, startVakje, doelVakje) {
+        bord.plaatsStuk('..', startVakje);
+        bord.plaatsStuk(stuk, doelVakje);
+
+        stukken.teken(bord.geefOpstelling());
+    },
+
     bepaalMogelijkheden: function() {
 
     }

@@ -1,7 +1,8 @@
 var bord = {
     ctx: document.getElementById("schaakbord").getContext("2d"),
     bord: {},
-    vakBreedte: 100, vakHoogte: 100,
+    vakBreedte: 100,
+    vakHoogte: 100,
 
     init: function() {
         this.maakBord();
@@ -28,14 +29,7 @@ var bord = {
 
     plaatsStuk: function(stuk, vakje) {
         vakje.stuk = stuk;
-        this.bord[vakje.row][vakje.col] = vakje;
-    },
-
-    verzetStuk: function(stuk, startVakje, doelVakje) {
-        this.plaatsStuk('..', startVakje);
-        this.plaatsStuk(stuk, doelVakje);
-
-        stukken.teken(this.geefOpstelling());
+        bord.bord[vakje.row][vakje.col] = vakje;
     },
 
     teken: function(kleur) {
@@ -95,7 +89,11 @@ var bord = {
         const row = Math.floor(y / this.vakHoogte);
         const col = Math.floor(x / this.vakBreedte);
 
-        return this.bord[row][col];
+        if (row in this.bord && col in this.bord[row]) {
+            return this.bord[row][col];
+        } else {
+            return null;
+        }
     },
 
     geefOpstelling: function() {

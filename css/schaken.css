@@ -11,6 +11,17 @@ div {
   height:811px
 }
 
+#opties {
+    width: 800px;
+}
+#opties span {
+    display: inline-block;
+    width: 49%;
+}
+#opties span:nth-child(2) {
+    text-align: right;
+}
+
 canvas {
   font-family: 'Font Awesome 5 Pro';
   font-weight: 600;
